@@ -4,9 +4,16 @@ import com.logstream.ingestion.config.KafkaTopicConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -26,10 +33,19 @@ public class WikimediaStreamConsumer {
 
         webClient.get()
                 .retrieve()
-                .bodyToFlux(String.class)
+                .bodyToFlux(DataBuffer.class)
+                .map(dataBuffer -> {
+                    String chunk = dataBuffer.toString(StandardCharsets.UTF_8);
+                    DataBufferUtils.release(dataBuffer);
+                    return chunk;
+                })
+                .concatMap(chunk -> {
+                    List<String> lines = Arrays.stream(chunk.split("\n")).toList();
+                    return Flux.fromIterable(lines);
+                })
                 .filter(line -> line.startsWith("data:"))
-                .log()
                 .map(line -> line.substring(5).trim())
+                .filter(json -> !json.isEmpty())
                 .doOnNext(jsonData -> {
                     log.info("Received event data: {}", jsonData);
                     kafkaTemplate.send(KafkaTopicConfig.WIKIMEDIA_TOPIC, jsonData)
