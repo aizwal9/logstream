@@ -1,0 +1,18 @@
+spring:
+  kafka:
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
+      group-id: logstream-group
+    bootstrap-servers: localhost:29092
+  application:
+    name: processing-service
+
+
+server:
+  port: 8082
+
+logging:
+  level:
+    root: info
