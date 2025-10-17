@@ -1,0 +1,16 @@
+spring:
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    bootstrap-servers: localhost:29092
+  application:
+    name: ingestion-service
+
+
+server:
+  port: 8081
+
+logging:
+  level:
+    root: debug
