@@ -1,0 +1,31 @@
+.tableCard {
+    margin-top: 24px;
+}
+
+.tableHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    h3 {
+        margin: 0;
+        font-weight: 600;
+    }
+}
+
+.filters {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.domainLink {
+    color: var(--color-link);
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

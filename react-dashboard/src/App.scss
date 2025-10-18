@@ -1,0 +1,12 @@
+.appLayout {
+    min-height: 100vh;
+    background-color: var(--color-background-primary);
+}
+
+.content {
+    padding: 24px;
+
+    @media (max-width: 768px) {
+        padding: 16px;
+    }
+}
