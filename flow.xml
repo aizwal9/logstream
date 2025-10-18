@@ -1,0 +1,70 @@
+<mxfile host="app.diagrams.net" modified="2025-10-18T18:02:00.000Z" agent="Gemini" etag="UFL9sC3-1_aA2bCdeFgH" version="22.0.0" type="device">
+    <diagram name="Page-1" id="f4c8a2b0-1234-5678-abcd-ef1234567890">
+        <mxGraphModel dx="1426" dy="752" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0" />
+                <mxCell id="1" parent="0" />
+                <mxCell id="A" value="Wikimedia SSE Stream" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="340" y="40" width="180" height="60" as="geometry" />
+                </mxCell>
+                <mxCell id="B" value="Ingestion Service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#28a745;strokeColor=#333333;fontColor=#ffffff;" vertex="1" parent="1">
+                    <mxGeometry x="350" y="160" width="160" height="60" as="geometry" />
+                </mxCell>
+                <mxCell id="C" value="Apache Kafka Topic" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="350" y="280" width="160" height="70" as="geometry" />
+                </mxCell>
+                <mxCell id="D" value="Processing Service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#28a745;strokeColor=#333333;fontColor=#ffffff;" vertex="1" parent="1">
+                    <mxGeometry x="350" y="410" width="160" height="60" as="geometry" />
+                </mxCell>
+                <mxCell id="E" value="Redis Cache" style="shape=datastore;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+                    <mxGeometry x="580" y="410" width="100" height="60" as="geometry" />
+                </mxCell>
+                <mxCell id="FrontendGroup" value="Frontend" style="group" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="250" y="530" width="360" height="200" as="geometry" />
+                </mxCell>
+                <mxCell id="F" value="Frontend Dashboard" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#007bff;strokeColor=#333333;fontColor=#ffffff;" vertex="1" parent="FrontendGroup">
+                    <mxGeometry x="100" y="40" width="160" height="60" as="geometry" />
+                </mxCell>
+                <mxCell id="G" value="Live Charts &amp; Table" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="FrontendGroup">
+                    <mxGeometry x="110" y="140" width="140" height="50" as="geometry" />
+                </mxCell>
+                <mxCell id="edge-A-B" value="HTTP/SSE" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="A" target="B">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="120" as="sourcePoint" />
+                        <mxPoint x="450" y="70" as="targetPoint" />
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-B-C" value="Produces Events" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="B" target="C">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="240" as="sourcePoint" />
+                        <mxPoint x="450" y="190" as="targetPoint" />
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-C-D" value="Consumes Events" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="C" target="D">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="370" as="sourcePoint" />
+                        <mxPoint x="450" y="320" as="targetPoint" />
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-D-E" value="Stores/Updates Metrics" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="D" target="E">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="500" y="440" as="sourcePoint" />
+                        <mxPoint x="550" y="390" as="targetPoint" />
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-D-F" value="Pushes Data" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="D" target="F">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="400" y="500" as="sourcePoint" />
+                        <mxPoint x="450" y="450" as="targetPoint" />
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-F-G" value="WebSocket" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="FrontendGroup" source="F" target="G">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="150" y="120" as="sourcePoint" />
+                        <mxPoint x="200" y="70" as="targetPoint" />
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
