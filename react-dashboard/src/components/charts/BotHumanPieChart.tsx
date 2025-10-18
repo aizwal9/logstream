@@ -58,7 +58,7 @@ export const BotHumanPieChart = memo(({ data }: ChartProps) => {
                                     marginBottom: '6px',
                                     color: 'var(--color-text-primary)',
                                 }}
-                                formatter={(value, name, props) => [
+                                formatter={(value, name) => [
                                     `${value}`,
                                     name,
                                 ]}
@@ -68,11 +68,14 @@ export const BotHumanPieChart = memo(({ data }: ChartProps) => {
                             <Legend
                                 iconType="circle"
                                 wrapperStyle={{ paddingTop: '16px' }}
-                                formatter={(value, entry, index) => (
-                                    <span style={{ color: 'var(--color-text)' }}>
-                                        {value} ({chartData[index].value})
-                                    </span>
-                                )}
+                                formatter={(value, _entry, index) => {
+                                    void _entry;
+                                    return (
+                                        <span style={{ color: 'var(--color-text)' }}>
+                                            {value} ({chartData[index].value})
+                                        </span>
+                                    );
+                                }}
                             />
                         </PieChart>
                     </ResponsiveContainer>
