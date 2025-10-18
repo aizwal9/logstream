@@ -1,6 +1,6 @@
 import './scss/ChangeTable.scss'
 import { useMemo, memo } from 'react';
-import { Card, Table, Tag } from 'antd';
+import { Card, Input, Segmented, Table, Tag } from 'antd';
 import type { TableProps } from 'antd';
 import type { WikimediaChange, FilterState } from '../types';
 
@@ -21,22 +21,54 @@ const columns: TableProps<WikimediaChange>['columns'] = [
         dataIndex: 'bot',
         key: 'bot',
         width: 100,
-        render: (isBot) => isBot ? <Tag icon={<IconBot />} color='purple'>Bot</Tag> : <Tag icon={<IconUser />} color='blue'>Human</Tag>
+        render: (isBot) =>
+            <Tag color={isBot ? 'purple' : 'blue'}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                    {isBot ? <IconBot /> : <IconUser />}
+                    {isBot ? 'Bot' : 'Human'}
+                </span>
+            </Tag>
+    },
+    { title: 'User', dataIndex: 'user', key: 'user', width: 200, ellipsis: true },
+    { title: 'Title', dataIndex: 'title', key: 'title', ellipsis: true },
+    {
+        title: 'Domain', dataIndex: 'server_name', key: 'server_name', width: 250, ellipsis: true,
+        render: (text) => <a className='domainLink'>{text}</a>
     }
 ]
 
 const ChangesTable = ({ changes, filter, setFilter }: ChangeTableProps) => {
 
     const filteredChanges = useMemo(() => changes.filter(c => {
-        const typeFilter = filter.type === 'all' || (filter.type === 'bot' && c.bot) || (filter.type === 'human' && !c.bot);
+        const typeFilter = filter.type === 'All' || (filter.type === 'Bot' && c.bot) || (filter.type === 'Human' && !c.bot);
         const domainFilter = filter.domain.trim() === '' || c.server_name.toLowerCase().includes(filter.domain.toLowerCase());
         return typeFilter && domainFilter
     }), [changes, filter])
 
+    const title = (
+        <div className='tableHeader'>
+            <h3>Live Recent Changes</h3>
+            <div className='filters'>
+                <Input.Search
+                    placeholder='Filter by domain'
+                    onSearch={(value) => setFilter(prev => ({ ...prev, domain: value }))}
+                    onChange={(e) => setFilter(prev => ({ ...prev, domain: e.target.value }))}
+                    allowClear
+                    style={{ width: 240 }}
+                />
+
+                <Segmented
+                    options={['All', 'Human', 'Bot']}
+                    value={filter.type}
+                    onChange={(value) => setFilter(prev => ({ ...prev, type: value as 'All' | 'Human' | 'Bot' }))}
+                />
+            </div>
+        </div>
+    )
 
 
     return (
-        <Card className='tableCard'>
+        <Card title={title} className='tableCard'>
             <Table
                 columns={columns}
                 dataSource={filteredChanges}

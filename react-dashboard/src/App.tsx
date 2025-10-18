@@ -9,21 +9,13 @@ import ChangesTable from './components/ChangesTable';
 import { BotHumanPieChart } from './components/charts/BotHumanPieChart';
 import { TopWikisBarChart } from './components/charts/TopWikisBarChart';
 // @ts-ignore
-// import { useWikimediaStream } from './hooks/useWikimediaStream';
+import { useWikimediaStream } from './hooks/useWikimediaStream';
 
 const { Content } = Layout;
 
 function App() {
-  const isConnected = true;
-  const error = null
-  const metrics = {
-    'totalChanges': 7,
-    'botChanges': 3,
-    'humanChanges': 4,
-    'wikiCounts': {'count':10,'test':20}
-  }
-  // const { isConnected, metrics, changes, error } = useWikimediaStream();
-  const [filter, setFilter] = useState<FilterState>({ type: 'all', domain: '' });
+  const { isConnected, metrics, changes, error } = useWikimediaStream();
+  const [filter, setFilter] = useState<FilterState>({ type: 'All', domain: '' });
 
   return (
     <ConfigProvider theme={{ algorithm: theme.darkAlgorithm, token: { fontFamily: "'Inter', sans-serif" } }}>
@@ -43,7 +35,7 @@ function App() {
             <Col xs={24} lg={12}><BotHumanPieChart data={metrics} /></Col>
             <Col xs={24} lg={12}><TopWikisBarChart data={metrics.wikiCounts} /></Col>
           </Row>
-          {/* <ChangesTable changes={changes} filter={filter} setFilter={setFilter} /> */}
+          <ChangesTable changes={changes} filter={filter} setFilter={setFilter} />
         </Content>
       </Layout>
     </ConfigProvider>

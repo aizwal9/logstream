@@ -17,6 +17,6 @@ export interface Metrics {
 }
 
 export interface FilterState {
-    type: 'all' | 'bot' | 'human';
+    type: 'All' | 'Bot' | 'Human';
     domain: string;
 }

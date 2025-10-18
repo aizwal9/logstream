@@ -9,11 +9,11 @@ interface ChartProps {
 export const TopWikisBarChart = memo(({ data }: ChartProps) => {
     const hasData = data && Object.keys(data).length > 0
     const chartData = useMemo(() => hasData ?
-        Object.entries(data).sort(([, a], [, b]) => b - a).slice(0, 7).map(([name, Edits]) => ({ name, Edits })).reverse()
+        Object.entries(data).sort(([, a], [, b]) => b - a).slice(0, 5).map(([name, Edits]) => ({ name, Edits })).reverse()
         : [], [data]);
 
     return (
-        <Card title="Top 10 Active Wikis">
+        <Card title="Top 5 Active Wikis">
             <div style={{ height: 300 }}>
                 {!hasData ? (
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'var(--color-text-secondary)' }}>
